@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="I2V3D: Controllable image-to-video generation with 3D guidance">
+  <meta name="keywords" content="Controllable Image-to-video generation, Motion control, 3D Guided, Diffusion Model">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>I2V3D</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script> -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.svg">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+<!-- <nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+</nav> -->
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">I2V3D: Controllable image-to-video generation with 3D guidance</h1>
+          
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="">Zhiyuan Zhang</a><sup>1</sup>,</span>
+            <span class="author-block">
+              <a href="https://www.dongdongchen.bid/" target="_blank">Dongdong Chen</a><sup>2</sup>,</span>
+            <span class="author-block">
+              <a href="https://www.cityu.edu.hk/stfprofile/jingliao.htm" target="_blank">Jing Liao</a><sup>1</sup>,
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>City University of Hong Kong,</span>
+            <span class="author-block"><sup>2</sup>Microsoft GenAI</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href="" target="_blank" 
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+
+              <!-- Video Link. -->
+              <!-- <span class="link-block">
+                <a href=""
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-youtube"></i>
+                  </span>
+                  <span>Video</span>
+                </a>
+              </span> -->
+            
+
+              <!-- Dataset Link. -->
+              <span class="link-block">
+                <a href="supplementary/supplementary.html"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="far fa-images"></i>
+                  </span>
+                  <span>Supp</span>
+                  </a>
+              </span>
+
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href=""
+                    class="external-link button is-normal is-rounded is-dark" disabled>
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code (Coming Soon)</span>
+                  </a>
+              </span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <video id="teaser" autoplay muted loop playsinline height="100%">
+        <source src="./static/videos/teaser.mp4"
+                type="video/mp4">
+      </video>
+      <!-- <img id="teaser" src="./static/images/teaser.png"
+      class="interpolation-image"
+      alt="Teaser image."/> -->
+
+      <h2 class="subtitle has-text-centered">
+        <span class="">Starting with a single image, our method reconstructs the complete scene geometry and uses the CG pipeline to enable precise control of character animation (e.g., keyframe animation or skeleton control) and camera movement. We then apply geometric guidance, based on the coarse rendering results, to generate high-quality, controllable videos.
+      </h2>
+    </div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+      <!-- <div class="column is-full-width"> -->
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          We present I2V3D, a novel framework for animating static images into dynamic videos with precise 3D control, leveraging the strengths of both 3D geometry guidance and advanced generative models. Our approach combines the precision of a computer graphics pipeline, enabling accurate control over elements such as camera movement, object rotation, and character animation, with the visual fidelity of generative AI to produce high-quality videos from coarsely rendered inputs. To support animations with any initial start point and extended sequences, we adopt a two-stage generation process guided by 3D geometry: 1) 3D-Guided Keyframe Generation, where a customized image diffusion model refines rendered keyframes to ensure consistency and quality, and 2) 3D-Guided Video Interpolation, a training-free approach that generates smooth, high-quality video frames between keyframes using bidirectional guidance. Experimental results highlight the effectiveness of our framework in producing controllable, high-quality animations from single input images by harmonizing 3D geometry with generative models. The code for our framework will be publicly released.
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+  </div>
+</section>
+
+
+<!-- Methods section -->
+<Section>
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Methods</h2>
+    
+    <div class="column is-full-width">
+      <div class="content has-text-justified">
+        <img src="static/images/overview.jpg">
+        <p> 
+          Our framework consists of three parts. First, we extract meshes from a single input image and use a 3D engine to create and preview a coarse animation. Next, we generate the keyframes using a 3D-guided process with an image diffusion model customized for the input image, incorporating multi-view augmentation and extended attention. Finally, we perform 3D-guided interpolation between generated keyframes to produce a high-quality, consistent video.
+        </p>
+      </div>
+    </div>
+    
+  </div>
+</Section>
+<!-- Methods section -->
+
+
+<!-- Results -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered"> Results </h2>
+    
+    <!-- Text-to-Vector Generation -->
+    <!-- <div class="hero-body"> -->
+    <div class="column is-full-width">
+
+      <div class="columns is-centered has-text-centered is-variable">
+        <div class="column is-full-width">
+          <h2 class="title is-4"> Comparisons with other baselines </h2>
+        </div>
+      </div>
+
+      <div class="column is-full-width">
+        <div class="content has-text-justified">
+          <!-- <img src="static/images/comparison.png"> -->
+          <video id="comparison" controls height="100%">
+            <source src="./static/videos/comparison.mp4"
+                    type="video/mp4">
+          </video>
+          <p> 
+            Qualitative comparison with baselines: (1st) human-like characters, (2nd panel) non-human objects. For human-like characters, MagicPose struggles with pose control (blue), and AnimateAnyone fails to preserve appearance (red). For non-human objects, MotionBooth shows overfitting (blue), and DragAnything shows error accumulation (red). ISculpting exhibits frame inconsistency (yellow) for both categories. Our method outperforms them by following the geometry guidance of coarse renderings but resolves their artifacts (pink).
+          </p>
+        </div>
+      </div>
+
+      <!-- image demo -->
+      <!-- <div class="container"> 
+        <div id="results-carousel" class="carousel results-carousel">
+          <div class="item">
+            <img src="static/images/comparison_1.png">
+          </div>
+          <div class="item">
+            <img src="static/images/comparison_2.png">
+          </div>
+        </div>
+      </div> -->
+
+    <!-- SVG Generation with Adjustable Levels of Details -->
+    <!-- <div class="hero-body"> -->
+    <div class="column is-full-width">
+      
+      <div class="columns is-centered has-text-centered is-variable">
+        <div class="column is-full-width">
+          <h2 class="title is-4">Ablation studies</h2>
+        </div>
+      </div>
+
+      <!-- image demo -->
+      <div class="container">
+        <div id="results-carousel" class="carousel results-carousel">
+          <div class="item">
+            <!-- <img src="static/images/abl1.jpg" width="70%"> -->
+            <video id="comparison" controls height="100%">
+              <source src="./static/videos/abl1.mp4"
+                      type="video/mp4">
+            </video>
+          </div>
+          <div class="item">
+            <!-- <img src="static/images/abl1.jpg" width="70%"> -->
+            <video id="comparison" controls height="100%">
+              <source src="./static/videos/abl2.mp4"
+                      type="video/mp4">
+            </video>
+          </div>
+          <div class="item">
+            <!-- <img src="static/images/abl1.jpg" width="70%"> -->
+            <video id="comparison" controls height="100%">
+              <source src="./static/videos/abl3.mp4"
+                      type="video/mp4">
+            </video>
+          </div>
+          <div class="item">
+            <!-- <img src="static/images/abl1.jpg" width="70%"> -->
+            <video id="comparison" controls height="100%">
+              <source src="./static/videos/abl4.mp4"
+                      type="video/mp4">
+            </video>
+          </div>
+          <div class="item">
+            <!-- <img src="static/images/abl1.jpg" width="70%"> -->
+            <video id="comparison" controls height="100%">
+              <source src="./static/videos/abl5.mp4"
+                      type="video/mp4">
+            </video>
+          </div>
+          <div class="item">
+            <!-- <img src="static/images/abl1.jpg" width="70%"> -->
+            <video id="comparison" controls height="100%">
+              <source src="./static/videos/abl6.mp4"
+                      type="video/mp4">
+            </video>
+          </div>
+      </div>
+
+      <!-- <div class="columns is-centered has-text-centered is-variable"> -->
+        <div class="column is-full-width">
+          <p>
+            (1) LoRA customization; (2) Extended Attention; (3) 3D-guided video interpolation; 
+            (4) Single-stage vs. two-stage video generation; (5) 3D reconstruction for background; (6) 3D-guided video generation vs. video refinement.
+          </p>
+        </div>
+      <!-- </div> -->
+    </div>
+   
+  </div>
+</section>
+<!-- Results -->
+
+
+<!-- More Applications -->
+ 
+<Section>
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Applications</h2>
+    
+    <div class="column is-full-width">
+      <div class="content has-text-justified">
+        <video id="comparison" controls height="100%">
+          <source src="./static/videos/more0.mp4"
+                  type="video/mp4">
+        </video>
+        <video id="comparison" controls height="100%">
+          <source src="./static/videos/more3.mp4"
+                  type="video/mp4">
+        </video>
+        <video id="comparison" controls height="100%">
+          <source src="./static/videos/more2.mp4"
+                  type="video/mp4">
+        </video>
+        <video id="comparison" controls height="100%">
+          <source src="./static/videos/more1.mp4"
+                  type="video/mp4">
+        </video>
+        <p> 
+          In addition to object animation and camera movement, users can further add, copy, replace, and edit 3D objects to compose a new 3D scene that guides video generation.
+        </p>
+      </div>
+    </div>
+    <div class="column is-full-width">
+      <div class="content has-text-justified">
+        <video id="comparison" controls height="100%">
+          <source src="./static/videos/dyn1.mp4"
+                  type="video/mp4">
+        </video>
+        <video id="comparison" controls height="100%">
+          <source src="./static/videos/dyn2.mp4"
+                  type="video/mp4">
+        </video>
+        <p> 
+          Users can adjust the intensity of 3D guidance (by modifying feature injection and ControlNet scale) to leverage more motion priors of the video generation model to increase dynamism. 
+        </p>
+      </div>
+    </div>
+    <div class="column is-full-width">
+      <div class="content has-text-justified">
+        <video id="comparison" controls height="100%">
+          <source src="./static/videos/2.mp4"
+                  type="video/mp4">
+        </video>
+        <video id="comparison" controls height="100%">
+          <source src="./static/videos/1.mp4"
+                  type="video/mp4">
+        </video>
+        <video id="comparison" controls height="100%">
+          <source src="./static/videos/0.mp4"
+                  type="video/mp4">
+        </video>
+        <p> 
+          Background reconstruction facilitates large camera movement in video generation as demonstrated in the above examples.
+        </p>
+      </div>
+    </div>
+  </div>
+
+</Section>
+<!-- More Applications -->
+
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>
+
+    </code></pre>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <a class="icon-link"
+         href="./static/videos/nerfies_paper.pdf">
+        <i class="fas fa-file-pdf"></i>
+      </a>
+      <a class="icon-link" href="https://github.com/keunhong" class="external-link" disabled>
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is licensed under a <a rel="license"
+                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+          <p>
+            This means you are free to borrow the <a
+              href="https://github.com/nerfies/nerfies.github.io">source code</a> of this website,
+            we just ask that you link back to this page in the footer.
+            Please remember to remove the analytics code included in the header of the website which
+            you do not want on your website.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

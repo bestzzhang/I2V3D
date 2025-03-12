@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Paper Video</title>
+  <style>
+    td {
+      text-align: center;
+    }
+    table {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1 align="center">Ablation</h1>
+  <h2 align="center">Single Stage v.s. Two-Stage (Ours) </h2>
+  
+  <table border="1" style="width: 1100px; height: 480px;">
+    <tr>
+      <td>
+        <video width="1080" height="460" controls>
+          <source src="videos/abl_stage.mp4" type="video/mp4">
+        </video>
+        <p> Single-stage methods lose object texture and accumulate color errors over time. </p>
+      </td>
+    </tr>
+  </table>
+  <h2 align="center">Ablation on LoRA customization with multi-view images </h2>
+  <table border="1" style="width: 1100px; height: 480px;">
+    <tr>
+      <td>
+        <video width="1080" height="460" controls>
+          <source src="videos/abl_multi.mp4" type="video/mp4">
+        </video>
+        <p> Customization without multi-view images overfits to the frontal view. </p>
+      </td>
+    </tr>
+  </table>
+  <h2 align="center">Ablation on Extend attention for consistent enhancement </h2>
+  <table border="1" style="width: 1100px; height: 480px;">
+    <tr>
+      <td>
+        <video width="1080" height="460" controls>
+          <source src="videos/abl_extend.mp4" type="video/mp4">
+        </video>
+        <p> Extend Attention enhances the consistency between keyframes. </p>
+      </td>
+    </tr>
+  </table>
+  <h2 align="center">Ablation on 3D-guided video interpolation </h2>
+  <table border="1" style="width: 1100px; height: 480px;">
+    <tr>
+      <td>
+        <video width="1080" height="460" controls>
+          <source src="videos/abl_interp.mp4" type="video/mp4">
+        </video>
+        <p> Both depth control and rendered feature control are vital for 3D guidance in video generation. </p>
+      </td>
+    </tr>
+  </table>
+  <h2 align="center">Ablation on 3D reconstruction for background </h2>
+  <table border="1" style="width: 1100px; height: 230px;">
+    <tr>
+      <td>
+        <video width="1080" height="222" controls>
+          <source src="videos/abl_mesh1.mp4" type="video/mp4">
+        </video>
+        <p> Reconstructed background meshes enable meaningful interactions with the background element. </p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <video width="1080" height="222" controls>
+          <source src="videos/abl_mesh2.mp4" type="video/mp4">
+        </video>
+        <p> Reconstructed background meshes provide 3D guidance after camera movement. </p> 
+      </td>
+    </tr>
+  </table>
+  <h2 align="center">Ablation on 3D-guided video generation vs. video refinement.</h1>
+    <table border="1" style="width: 1100px; height: 480px;">
+      <tr>
+        <td>
+          <video width="1080" height="460" controls>
+            <source src="videos/abl_refine.mp4" type="video/mp4">
+          </video>
+          <p> Renoise (Add noise to a certain noisy level and denoise again) fails to refine the black region. Tokenflow (a V2V translation method) has flickering issues. </p>
+        </td>
+      </tr>
+    </table>
+<p></p>
+
+<h2 align="center">More experiments on larger camera movement</h1>
+  <table border="1" style="width: 1100;">
+  <tr>
+    <td>
+      <video width="1080" height="230" controls>
+        <source src="videos/0.mp4" type="video/mp4">
+      </video>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <video width="1080" height="230" controls>
+        <source src="videos/1.mp4" type="video/mp4">
+      </video>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <video width="1080" height="230" controls>
+        <source src="videos/2.mp4" type="video/mp4">
+      </video>
+    </td>
+  </tr>
+</table>
+
+</html>

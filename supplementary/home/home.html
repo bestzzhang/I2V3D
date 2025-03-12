@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: auto;
+        }
+        
+        .my_text {
+            font-size: 22px;
+        }
+        .my_title {
+            font-size: 26px;
+        }
+        
+        #inner {
+            left: 10%; 
+            top: 45px; 
+            width: 80%; 
+            height: auto; 
+            position: absolute; 
+            z-index: 1;
+        }
+        
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            margin-left: auto;
+            margin-right: auto;
+            width: 85%;
+        }
+        
+        td, th {
+            border: 1.5px solid #706f6f;
+            text-align: left;
+            padding: 10px;
+        }
+        
+        .video-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 250px; /* Adjust this height to suit your needs */
+        }
+</style>
+        
+
+<body>
+  <div class="my_text" id="inner">
+    <p class="my_title"><strong> I2V3D: Controllable image-to-video generation with 3D guidance </strong></p>
+    <p></p>
+    <strong>Contents list</strong>:
+    <p></p>
+    <table>
+        <tr>
+            <td></td>
+            <td>No. of Video</td>
+        </tr>
+        <tr>
+          <td> --- <a href="appendix.pdf" target="_blank">Appendix</a></td>
+          <td></td>
+      </tr>
+        <tr>
+            <td>&emsp;&emsp; --- <a href="../user_study/index.html" target="displayframe">User Study (included paper comparison video)</a></td>
+            <td>32</td>
+        </tr>
+        <tr>
+          <td>&emsp;&emsp; --- <a href="../ablation/index.html" target="displayframe">Ablation</a></td>
+          <td>10</td>
+      </tr>
+      <tr>
+        <td>&emsp;&emsp; --- <a href="../discussion/index.html" target="displayframe">Discussion</a></td>
+        <td>6</td>
+    </tr>
+    <tr>
+      <td>&emsp;&emsp; --- <a href="../limitation/index.html" target="displayframe">Limitation</a></td>
+      <td>2</td>
+  </tr>
+    </table>
+    <p></p>
+
+    <strong>Teaser videos</strong>
+    <p></p>
+    <table border="1" style="width: 1100;">
+          <td>
+            <img src="images/figure0.jpg" alt="Figure 0" width="250">
+            <video width="800" height="230" controls>
+              <source src="videos/teaser0.mp4" type="video/mp4">
+            </video>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <img src="images/figure3.jpg" alt="Figure 0" width="250">
+            <video width="800" height="230" controls>
+              <source src="videos/teaser2.mp4" type="video/mp4">
+            </video>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <img src="images/figure1.jpg" alt="Figure 0" width="250">
+            <video width="800" height="230" controls>
+              <source src="videos/teaser1.mp4" type="video/mp4">
+            </video>
+          </td>
+      </tr>
+        <tr>
+          <td>
+            <img src="images/figure2.jpg" alt="Figure 0" width="250">
+            <video width="800" height="230" controls>
+              <source src="videos/teaser3.mp4" type="video/mp4">
+            </video>
+          </td>
+        </tr>
+      </table>
+    <p></p>
+</div>
+
+</body>
+
+</html>
